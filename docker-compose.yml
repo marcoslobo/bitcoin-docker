@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  bitcoind:
+    image: bitcoin:28
+    command: ["bitcoind", "-testnet4"]
+    volumes:
+      - bitcoin_data:/root/.bitcoin
+    ports:
+      - "18332:18332"
+    networks:
+      - bitcoin_network
+
+volumes:
+  bitcoin_data:
+
+networks:
+  bitcoin_network:
