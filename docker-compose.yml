@@ -29,6 +29,7 @@ services:
       --cookie mempool:mempool
       --db-dir /electrs
       --cors '*'
+      --cookie="lobo_dev:lobo123lobo"
 
 volumes:
   bitcoind-data:
