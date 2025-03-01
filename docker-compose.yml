@@ -25,8 +25,7 @@ services:
     entrypoint:
       -  /bin/electrs
     command: |
-      --address-search
-      --cookie mempool:mempool
+      --address-search      
       --db-dir /electrs
       --cors '*'
       --cookie="lobo_dev:lobo123lobo"
