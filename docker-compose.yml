@@ -24,7 +24,7 @@ services:
   #       ipv4_address: 172.18.0.5
 
 volumes:
-  bitcoin_data:
+  bitcoind-data:
 
 networks:
   bitcoin_network:
