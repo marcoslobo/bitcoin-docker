@@ -2,8 +2,7 @@ version: '3.8'
 
 services:
   bitcoind:
-    image: kylemanna/bitcoind
-    #command: ["bitcoind", "-testnet4"]
+    image: kylemanna/bitcoind    
     volumes:
       - bitcoind-data:/bitcoin/.bitcoin
       - ./bitcoind/bitcoin.conf:/bitcoin/.bitcoin/bitcoin.conf
@@ -12,19 +11,28 @@ services:
       - 127.0.0.1:8332:8332
     networks:
       - bitcoin_network   
-  # electrs:
-  #   image: electrs:
-  #   depends_on:
-  #     - bitcoind
-  #   build:
-  #     image: mempool/electrs         
-  #   restart: on-failure
-  #   networks:
-  #     default:
-  #       ipv4_address: 172.18.0.5
+  electrs:
+    image: mempool/electrs         
+    depends_on:
+      - bitcoind    
+    restart: on-failure
+    ports:
+      - 50001:50001
+    networks:
+      - bitcoin_network     
+    volumes:
+      - 'electrs_data:/electrs' 
+    entrypoint:
+      -  /bin/electrs
+    command: |
+      --address-search
+      --cookie mempool:mempool
+      --db-dir /electrs
+      --cors '*'
 
 volumes:
   bitcoind-data:
+  electrs_data:
 
 networks:
   bitcoin_network:
