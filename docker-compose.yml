@@ -5,7 +5,7 @@ services:
     image: kylemanna/bitcoind    
     volumes:
       - bitcoind-data:/bitcoin/.bitcoin
-      - ./bitcoind/bitcoin.conf:/bitcoin/.bitcoin/bitcoin.conf
+      - ./bitcoind/bitcoin.conf:/bitcoin/.bitcoin/bitcoin.conf      
     ports:
       - 8333:8333
       - 8332:8332
@@ -21,15 +21,15 @@ services:
     networks:
       - bitcoin_network     
     volumes:
-      - 'electrs_data:/electrs' 
-      - bitcoind-data:/bitcoin/.bitcoin:ro
+      - electrs_data:/electrs
+      - ~/var/lib/docker/volumes/bitcoind-data:/root/.bitcoin:ro
     entrypoint:
       -  /bin/electrs
     command: |
       --address-search      
       --db-dir /electrs
       --cors '*'
-      --cookie="lobo_dev:lobo123lobo"
+      --cookie="lobo_dev:lobo123lobo"      
 
 volumes:
   bitcoind-data:
