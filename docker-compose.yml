@@ -10,8 +10,7 @@ services:
       - 8333:8333
       - 127.0.0.1:8332:8332
     networks:
-      host:
-        - bitcoin_network   
+      - bitcoin_network   
   electrs:
     image: mempool/electrs         
     depends_on:
@@ -36,6 +35,6 @@ volumes:
   electrs_data:
 
 networks:
-  default:
+  bitcoin_network:
     name: bitcoin_network
     external: true  
