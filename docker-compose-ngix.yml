@@ -1,0 +1,19 @@
+services:
+  app:
+    container_name: nginx
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80' # Public HTTP Port
+      - '443:443' # Public HTTPS Port
+      - '81:81' # Admin Web Port
+      - '8332:8332' # Bitcoin RPC Port
+      - '8333:8333' # Bitcoin P2P Port
+      - '50001:50001' # Electrs Port
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+networks:
+  default:
+    name: nginx_proxy
+    external: true
