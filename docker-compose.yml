@@ -22,6 +22,7 @@ services:
       - bitcoin_network     
     volumes:
       - 'electrs_data:/electrs' 
+      - bitcoind-data:/bitcoin/.bitcoin:ro
     entrypoint:
       -  /bin/electrs
     command: |
