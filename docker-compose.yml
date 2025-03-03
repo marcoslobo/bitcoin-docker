@@ -22,14 +22,15 @@ services:
       - bitcoin_network     
     volumes:
       - electrs_data:/electrs
-      - ~/var/lib/docker/volumes/bitcoind-data:/root/.bitcoin:ro
+      - bitcoind-data:/root/.bitcoin:ro
     entrypoint:
       -  /bin/electrs
     command: |
       --address-search      
       --db-dir /electrs
       --cors '*'
-      --cookie="lobo_dev:lobo123lobo"      
+      --cookie="lobo_dev:lobo123lobo"
+      --daemon-rpc-addr=bitcoind:8332
 
 volumes:
   bitcoind-data:
@@ -37,5 +38,4 @@ volumes:
 
 networks:
   bitcoin_network:
-    name: bitcoin_network
-    external: true  
+    driver: bridge
