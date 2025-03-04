@@ -23,11 +23,15 @@ services:
     volumes:
       - electrs_data:/electrs
       - bitcoind-data:/root/.bitcoin:ro
-      - ./config.toml:/config.toml:ro
+      - ./electrs/config.toml:/electrs/config.toml
     entrypoint:
       -  /bin/electrs
     command: |
-      --conf /config.toml
+      --address-search      
+      --db-dir /electrs
+      --cors '*'
+      --cookie="lobo_dev:lobo123lobo"
+      --daemon-rpc-addr=bitcoind:8332
 
 volumes:
   bitcoind-data:
