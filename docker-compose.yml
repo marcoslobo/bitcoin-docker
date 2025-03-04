@@ -10,7 +10,10 @@ services:
       - 8333:8333
       - 8332:8332
     networks:
-      - bitcoin_network   
+      - bitcoin_network
+    environment:
+      - DISABLEWALLET=1
+      
   electrs:
     image: mempool/electrs         
     depends_on:
@@ -18,20 +21,31 @@ services:
     restart: on-failure
     ports:
       - 50001:50001
+      - 4224:4224 # Monitoring
     networks:
       - bitcoin_network     
     volumes:
-      - electrs_data:/electrs
-      - bitcoind-data:/root/.bitcoin:ro
-      - ./electrs/config.toml:/electrs/config.toml
+      - electrs_data:/electrs/db
+      - bitcoind-data:/bitcoin/.bitcoin:ro
+    environment:
+      - RUST_BACKTRACE=1
+      - RUST_LOG=info
     entrypoint:
-      -  /bin/electrs
+      - /bin/electrs
     command: |
       --address-search      
-      --db-dir /electrs
+      --db-dir /electrs/db
       --cors '*'
       --cookie="lobo_dev:lobo123lobo"
       --daemon-rpc-addr=bitcoind:8332
+      --daemon-dir=/bitcoin/.bitcoin
+      --electrum-rpc-addr=0.0.0.0:50001
+      --jsonrpc-import
+      --utxos-limit=5000
+      --txid-limit=5000
+      --index-unspendables
+      --monitoring-addr=0.0.0.0:4224
+      --wait-duration-secs=10
 
 volumes:
   bitcoind-data:
