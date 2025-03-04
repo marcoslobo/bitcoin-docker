@@ -14,37 +14,37 @@ services:
     environment:
       - DISABLEWALLET=1
       
-  electrs:
-    image: mempool/electrs         
-    depends_on:
-      - bitcoind    
-    restart: on-failure
-    ports:
-      - 50001:50001
-      - 4224:4224 # Monitoring
-    networks:
-      - bitcoin_network     
-    volumes:
-      - electrs_data:/electrs/db
-      - bitcoind-data:/bitcoin/.bitcoin:ro
-    environment:
-      - RUST_BACKTRACE=1
-      - RUST_LOG=info
-    entrypoint:
-      - /bin/electrs
-    command: |
-      --address-search      
-      --db-dir /electrs/db
-      --cors '*'
-      --cookie="lobo_dev:lobo123lobo"
-      --daemon-rpc-addr=bitcoind:8332
-      --daemon-dir=/bitcoin/.bitcoin
-      --electrum-rpc-addr=0.0.0.0:50001
-      --jsonrpc-import                        
+  # electrs:
+  #   image: mempool/electrs         
+  #   depends_on:
+  #     - bitcoind    
+  #   restart: on-failure
+  #   ports:
+  #     - 50001:50001
+  #     - 4224:4224 # Monitoring
+  #   networks:
+  #     - bitcoin_network     
+  #   volumes:
+  #     - electrs_data:/electrs/db
+  #     - bitcoind-data:/bitcoin/.bitcoin:ro
+  #   environment:
+  #     - RUST_BACKTRACE=1
+  #     - RUST_LOG=info
+  #   entrypoint:
+  #     - /bin/electrs
+  #   command: |
+  #     --address-search      
+  #     --db-dir /electrs/db
+  #     --cors '*'
+  #     --cookie="lobo_dev:lobo123lobo"
+  #     --daemon-rpc-addr=bitcoind:8332
+  #     --daemon-dir=/bitcoin/.bitcoin
+  #     --electrum-rpc-addr=0.0.0.0:50001
+  #     --jsonrpc-import                        
 
 volumes:
   bitcoind-data:
-  electrs_data:
+ 
 
 networks:
   bitcoin_network:
