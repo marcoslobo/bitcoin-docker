@@ -40,12 +40,7 @@ services:
       --daemon-rpc-addr=bitcoind:8332
       --daemon-dir=/bitcoin/.bitcoin
       --electrum-rpc-addr=0.0.0.0:50001
-      --jsonrpc-import
-      --utxos-limit=5000
-      --txid-limit=5000
-      --index-unspendables
-      --monitoring-addr=0.0.0.0:4224
-      --wait-duration-secs=10
+      --jsonrpc-import                        
 
 volumes:
   bitcoind-data:
